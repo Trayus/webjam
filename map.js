@@ -1,6 +1,6 @@
 var map = new Array();
 
-function checkAndReact(var player)
+function checkAndReact(player)
 {
 	
 }
@@ -9,8 +9,8 @@ function checkAndReact(var player)
 
 function drawMap()
 {
-	for(var r in map)
+	for(i = 0; i < map.length; i++)
 	{
-		r.draw();
+		map[i].draw();
 	}
 }
