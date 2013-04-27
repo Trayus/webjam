@@ -1,5 +1,6 @@
 function draw()
 {
+	
 	drawMap();
 }
 
@@ -18,6 +19,8 @@ function gameloop()
 map.push(new Rectangle(10, 10, 100, 100));
 map.push(new Rectangle(200, 50, 10, 50));
 console.log(map);
+
+
 
 setInterval(gameloop, 50);
 draw();
