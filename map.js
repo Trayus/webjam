@@ -1,9 +1,11 @@
 var map = new Array();
 
-function hitsMap()
+function checkAndReact(var player)
 {
-
+	
 }
+
+
 
 function drawMap()
 {
