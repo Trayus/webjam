@@ -4,10 +4,19 @@ function draw()
 	
 }
 
-function gameloop()
+function update()
 {
-	//console.log("hello");
+
 }
 
-setInterval(gameloop, 50);
+function gameloop()
+{
+	update();
+	draw();
+}
 
+/** initiation code **/
+
+
+setInterval(gameloop, 50);
+draw();
