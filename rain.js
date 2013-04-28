@@ -13,8 +13,7 @@ function updateRain(elapsedtime) {
    raincount++;
 }
 
-function drawRain()
-{
+function drawRain() {
 	for(var i = 0; i < rainarray.length; i++)
 	{
 		rainarray[i].draw();
