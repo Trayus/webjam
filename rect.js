@@ -7,7 +7,7 @@ var Rectangle = function(x, y, w, h, r, g, b)
 	this.red = r,
 	this.green = g,
 	this.blue = b,
-	this.alpha = 1,
+	this.alpha = 1;
 	
 	this.collide = function(other)
 	{
