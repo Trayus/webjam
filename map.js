@@ -28,6 +28,8 @@ function checkAndReact(player)
 			else
 			{
 				// you're screwed...
+				player.rectangle.y = map[i].y - player.rectangle.height; 
+				return true; 
 			}
 		}
 	}

@@ -6,6 +6,8 @@ var dcost = 10;
 var pushback = 50;
 var adjpushback = pushback;
 var pspeed = 1.5
+var ncost = 20;
+var dcost = 10;
 
 var Player = function(x, y, num)
 {
@@ -167,8 +169,8 @@ var Player = function(x, y, num)
 	{
 		acc = 0.2;
 		maxvx = 600 / this.size; //3.5 * 60 / (this.size);
-		maxvy = 10;
-		jumpstr = -10;
+		maxvy = 12;
+		jumpstr = -12;
 	
 		var shift = false;
 		if (this.num == 1)
@@ -215,6 +217,7 @@ var Player = function(x, y, num)
 			this.falling = false;
 		if (checkFalling(this))
 			this.falling = true;
+		if (!this.falling) this.velocity.y = 0;
 			
 		this.checkAttack();
 	},
