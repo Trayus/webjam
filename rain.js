@@ -1,8 +1,7 @@
-var rain = new Array();
+var rainarray = new Array();
 
-function makeItRain() {
+this.update = function(elapsedtime) {
    var x = Math.floor(Math.random() + 1200);
-   var y = Math.floor(Math.random() + 600);
    
    
 }
