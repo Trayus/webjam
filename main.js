@@ -42,6 +42,7 @@ function update()
     
 	if (active)
 	{
+	    updateWind(dtime);
 		updateRain(dtime);
 		updateProjectiles(dtime);
 		player1.update(dtime);

@@ -26,8 +26,7 @@ function checkPlayer(player)
 	}
 }
 
-function drawRain()
-{
+function drawRain() {
 	for(var i = 0; i < rainarray.length; i++)
 	{
 		rainarray[i].draw();
