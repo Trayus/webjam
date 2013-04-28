@@ -11,7 +11,7 @@ function checkAndReact(player)
 			var topright = checkPoint(player.rectangle.x + player.rectangle.width, player.rectangle.y, map[i]);
 			var botleft = checkPoint(player.rectangle.x, player.rectangle.y + player.rectangle.height, map[i]);
 			var botright = checkPoint(player.rectangle.x + player.rectangle.width, player.rectangle.y + player.rectangle.height, map[i]);
-			var numcollisions = topleft? 1 : 0 + topright? 1 : 0 + botleft? 1 : 0 + botright? 1 : 0;			
+			var numcollisions = (topleft? 1 : 0) + (topright? 1 : 0) + (botleft? 1 : 0) + (botright? 1 : 0);			
 			
 			if (numcollisions == 1)
 			{
@@ -22,7 +22,7 @@ function checkAndReact(player)
 			{
 				if (topleft && topright){ player.rectangle.y = map[i].y + map[i].height;  player.velocity.y = 0; }
 				if (botleft && botright){ player.rectangle.y = map[i].y - player.rectangle.height; return true; }
-				if (topleft && botleft) player.rectangle.x = map[i].x + map[i].width;
+				if (topleft && botleft) { player.rectangle.x = map[i].x + map[i].width; console.log("HAI");}
 				if (topright && botright) player.rectangle.x = map[i].x - player.rectangle.width;
 			}
 			else
