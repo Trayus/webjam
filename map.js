@@ -47,6 +47,21 @@ function checkRain(drop)
 	return false;
 }
 
+function checkProjectile(proj)
+{
+	console.log("here");
+	for(i = 0; i < map.length; i++)
+	{
+	console.log(i);
+		if (map[i].collide(proj.rectangle))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
 function checkPoint(x, y, rect)
 {
 	if (x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height)
