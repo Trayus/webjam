@@ -5,12 +5,9 @@ function draw()
 		
 	drawMap();
 	
-	drawRain();
-	
-	player1.draw();
-	player2.draw();
 	if (active)
 	{
+		drawRain();
 		player1.draw();
 		player2.draw();
 	}
@@ -42,12 +39,9 @@ function update()
 {
 	var dtime = 1;
     
-	updateRain(dtime);
-	player1.update(dtime);
-	player2.update(dtime);
-	
 	if (active)
 	{
+		updateRain(dtime);
 		player1.update(dtime);
 		player2.update(dtime);
 		
