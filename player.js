@@ -3,8 +3,8 @@ var dprojspeed = 12;
 var minnproj = 24;
 var mindproj = 22;
 var spread = 4;
-var ncost = 10;
-var dcost = 5;
+var ncost = 20;
+var dcost = 10;
 
 var Player = function(x, y, num)
 {
@@ -150,8 +150,8 @@ var Player = function(x, y, num)
 	{
 		acc = 0.2;
 		maxvx = 3.5 * 60 / (this.size);
-		maxvy = 10;
-		jumpstr = -10;
+		maxvy = 12;
+		jumpstr = -12;
 	
 		var shift = false;
 		if (this.num == 1)
@@ -198,6 +198,7 @@ var Player = function(x, y, num)
 			this.falling = false;
 		if (checkFalling(this))
 			this.falling = true;
+		if (!this.falling) this.velocity.y = 0;
 			
 		this.checkAttack();
 	},

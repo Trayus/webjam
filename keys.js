@@ -1,5 +1,6 @@
 var w = false, a = false, s = false, d = false, ab1 = false;
 var up = false, left = false, down = false, right = false, ab2 = false;
+var space;
 
 document.addEventListener('keydown', function(event) {
 	//console.log("event down " + event.keyCode);
@@ -18,6 +19,10 @@ document.addEventListener('keydown', function(event) {
     else if(event.keyCode == 78) {
 		ab2 = true;
 		console.log("right: " + right + " left: " + left + " up: " + up + " down: " + down);
+    }
+	
+    if(event.keyCode == 32) {
+		space = true;
     }
 	
 	if(event.keyCode == 87) {
@@ -54,6 +59,10 @@ document.addEventListener('keyup', function(event) {
     }
     else if(event.keyCode == 78) {
 		ab2 = false;
+    }
+	
+    if(event.keyCode == 32) {
+		space = false;
     }
 	
 	if(event.keyCode == 87) {

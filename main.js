@@ -63,7 +63,7 @@ function update()
 	}
 	else
 	{
-		if (ab1 || ab2) reset();
+		if (space) reset();
 	}
 }
 
@@ -74,9 +74,15 @@ function gameloop()
 }
 
 /** initiation code **/
-map.push(new Rectangle(10, 500, 1000, 50, 250, 250, 250));
-map.push(new Rectangle(700, 420, 200, 15, 250, 250, 250));
-map.push(new Rectangle(50, 300, 50, 150, 250, 250, 250));
+map.push(new Rectangle(100, 550, 380, 150, 250, 250, 250));
+map.push(new Rectangle(720, 550, 380, 150, 250, 250, 250));
+map.push(new Rectangle(1100, 320, 40, 160, 250, 250, 250));
+map.push(new Rectangle(60, 320, 40, 160, 250, 250, 250));
+map.push(new Rectangle(850, 430, 120, 20, 250, 250, 250));
+map.push(new Rectangle(230, 430, 120, 20, 250, 250, 250));
+map.push(new Rectangle(140, 200, 30, 30, 250, 250, 250));
+map.push(new Rectangle(1040, 200, 30, 30, 250, 250, 250));
+map.push(new Rectangle(400, 320, 400, 20, 250, 250, 250));
 
 var player1;
 var player2;
