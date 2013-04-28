@@ -1,5 +1,5 @@
 var projectiles = new Array();
-var knockback = 2;
+var knockback = 1.5;
 
 var Projectile = function(x, y, shotby, vx, vy)
 {

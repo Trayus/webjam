@@ -1,10 +1,11 @@
-var nprojspeed = 8;
-var dprojspeed = 12;
-var minnproj = 24;
-var mindproj = 22;
+var nprojspeed = 12;
+var dprojspeed = 10;
 var spread = 4;
-var ncost = 10;
-var dcost = 5;
+var ncost = 20;
+var dcost = 10;
+var pushback = 50;
+var adjpushback = pushback;
+var pspeed = 1.5
 
 var Player = function(x, y, num)
 {
@@ -19,7 +20,7 @@ var Player = function(x, y, num)
 	
 	this.resize = function(size)
 	{
-		if ((size > 0 && this.size < 60) || (size < 0 && this.size > 20))
+		if ((size > 0 && this.size + size < 60) || (size < 0 && this.size - size > 20))
 		{
 			this.size += size;
 			this.rectangle.x -= size / 2;
@@ -35,7 +36,7 @@ var Player = function(x, y, num)
 		if (this.num == 1 && ab1 && !this.attacked)
 		{
 			this.attacked = true;
-			if (!d && !a && !w && !s && this.size > minnproj)
+			if (!d && !a && !w && !s)
 			{
 				this.velocity.x = 0;
 				this.velocity.y = -5;
@@ -50,11 +51,10 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this,
 						dx * nprojspeed + Math.random() / 4, dy * nprojspeed + Math.random() / 4));
 				}
-					
-				this.resize(-5);
+				this.resize(-ncost);
 				
 			}
-			else if ((d || a || w || s) && this.size > mindproj)
+			else if ((d || a || w || s))
 			{
 				var angle;
 				if (a ^ d && w ^ s) // diagonal
@@ -63,6 +63,7 @@ var Player = function(x, y, num)
 					if (d && !a && w && !s) angle = 315;
 					if (a && !d && s && !w) angle = 135;
 					if (d && !a && s && !w) angle = 45;
+					adjpushback = pushback / 2;
 				}
 				else
 				{
@@ -81,21 +82,28 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
-				this.resize(-3);
-				this.velocity.x -= dx * 999;
-				this.velocity.y -= dy * 999;
+				
+				if(this.size < 20 + dcost)
+				{
+					adjpushback = adjpushback / 2;
+				}
+				this.velocity.x -= dx * adjpushback;
+				this.velocity.y -= dy * adjpushback;
+				adjpushback = pushback;
+				
+				this.resize(-dcost);
 			}
 		}
 			
-		else if (this.num != 1 && ab2 && !this.attacked)
+		else if (this.num != 1 && ab2 && !this.attacked && this.size < 20 + ncost)
 		{
 		    this.attacked = true;
-			if (!right && !left && !up && !down && this.size > minnproj)
+			if (!right && !left && !up && !down)
 			{
 				this.velocity.x = 0;
 				this.velocity.y = -5;
 				
-				for (i = 0; i < 360; i += 20)
+				for(i = 0; i < 360; i += 20)
 				{
 					var dir = i / 180.0 * 3.14;
 					var dx = Math.cos(dir);
@@ -106,9 +114,9 @@ var Player = function(x, y, num)
 						dx * nprojspeed + Math.random() / 4, dy * nprojspeed + Math.random() / 4));
 				}
 				
-				this.resize(-5);
+				this.resize(-ncost);
 			}
-			else if ((right || left || up || down) && this.size > mindproj)
+			else if ((right || left || up || down))
 			{
 				var angle;
 				if (left ^ right && up ^ down) // diagonal
@@ -117,6 +125,7 @@ var Player = function(x, y, num)
 					if (right && !left && up && !down) angle = 315;
 					if (left && !right && down && !up) angle = 135;
 					if (right && !left && down && !up) angle = 45;
+					adjpushback = pushback / 2;
 				}
 				else
 				{
@@ -135,9 +144,17 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
-				this.resize(-3);
-				this.velocity.x -= dx * 999;
-				this.velocity.y -= dy * 999;
+				
+				if(this.size < 20 + dcost)
+				{
+					adjpushback = adjpushback / 2;
+				}
+				this.velocity.x -= dx * adjpushback;
+				this.velocity.y -= dy * adjpushback;
+				adjpushback = pushback;
+				
+				this.resize(-dcost);
+				
 			}
 		}
 		else if ((this.num == 1 && !ab1) || (this.num != 1 && !ab2))
@@ -149,7 +166,7 @@ var Player = function(x, y, num)
 	this.update = function(elapsedtime)
 	{
 		acc = 0.2;
-		maxvx = 3.5 * 60 / (this.size);
+		maxvx = 600 / this.size; //3.5 * 60 / (this.size);
 		maxvy = 10;
 		jumpstr = -10;
 	
@@ -191,8 +208,8 @@ var Player = function(x, y, num)
 		
 		checkHit(this);
 		
-		this.rectangle.x += this.velocity.x * elapsedtime;
-		this.rectangle.y += this.velocity.y * elapsedtime;
+		this.rectangle.x += this.velocity.x * pspeed * elapsedtime;
+		this.rectangle.y += this.velocity.y * pspeed * elapsedtime;
 		
 		if (checkAndReact(this))
 			this.falling = false;
