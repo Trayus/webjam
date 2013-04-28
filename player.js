@@ -15,20 +15,27 @@ var Player = function(x, y, num)
 		maxvy = 10;
 		jumpstr = -10;
 	
+		var shift = false;
 		if (this.num == 1)
 		{
 			if (d && !a) this.acceleration.x = acc;
 			else if (a && !d) this.acceleration.x = -acc;
 			else this.acceleration.x = 0;
+			
+			if (d && !a && this.velocity.x < 0) { shift = true; this.acceleration.x = acc; }
+			if (a && !d && this.velocity.x > 0) { shift = true; this.acceleration.x = -acc; }
 		}
 		else
 		{
 			if (right && !left) this.acceleration.x = acc;
 			else if (left && !right) this.acceleration.x = -acc;
 			else this.acceleration.x = 0;
+			
+			if (right && !left && this.velocity.x < 0) { shift = true; this.acceleration.x = acc; }
+			if (left && !right && this.velocity.x > 0) { shift = true; this.acceleration.x = -acc; }
 		}
 		this.velocity.x += this.acceleration.x * elapsedtime;
-		if (this.acceleration.x == 0) this.velocity.x /= 1.3;
+		if (this.acceleration.x == 0 || shift) this.velocity.x /= 1.3;
 		
 		if (this.velocity.x > maxvx) this.velocity.x = maxvx;
 		if (this.velocity.x < -maxvx) this.velocity.x = -maxvx;
