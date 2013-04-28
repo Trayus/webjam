@@ -3,20 +3,21 @@ var up = false, left = false, down = false, right = false, ab2 = false;
 
 document.addEventListener('keydown', function(event) {
 	//console.log("event down " + event.keyCode);
-    if(event.keyCode == 37) {
+    if(event.keyCode == 74) {
 		left = true;
     }
-    else if(event.keyCode == 39) {
+    else if(event.keyCode == 76) {
 		right = true;
     }
-    else if(event.keyCode == 38) {
+    else if(event.keyCode == 73) {
 		up = true;
     }
-    else if(event.keyCode == 40) {
+    else if(event.keyCode == 75) {
 		down = true;
     }
-    else if(event.keyCode == 17) {
+    else if(event.keyCode == 78) {
 		ab2 = true;
+		console.log("right: " + right + " left: " + left + " up: " + up + " down: " + down);
     }
 	
 	if(event.keyCode == 87) {
@@ -31,7 +32,7 @@ document.addEventListener('keydown', function(event) {
     else if(event.keyCode == 68) {
 		d = true;
     }
-    else if(event.keyCode == 32) {
+    else if(event.keyCode == 67) {
 		ab1 = true;
     }
 });
@@ -39,19 +40,19 @@ document.addEventListener('keydown', function(event) {
 
 document.addEventListener('keyup', function(event) {
 	//console.log("event up " + event.keyCode);
-    if(event.keyCode == 37) {
+    if(event.keyCode == 74) {
 		left = false;
     }
-    else if(event.keyCode == 39) {
+    else if(event.keyCode == 76) {
 		right = false;
     }
-    else if(event.keyCode == 38) {
+    else if(event.keyCode == 73) {
 		up = false;
     }
-    else if(event.keyCode == 40) {
+    else if(event.keyCode == 75) {
 		down = false;
     }
-    else if(event.keyCode == 17) {
+    else if(event.keyCode == 78) {
 		ab2 = false;
     }
 	
@@ -67,7 +68,7 @@ document.addEventListener('keyup', function(event) {
     else if(event.keyCode == 68) {
 		d = false;
     }
-    else if(event.keyCode == 32) {
+    else if(event.keyCode == 67) {
 		ab1 = false;
     }
 });

@@ -1,4 +1,5 @@
 var projectiles = new Array();
+var knockback = 2;
 
 var Projectile = function(x, y, shotby, vx, vy)
 {
@@ -44,8 +45,8 @@ function checkHit(player)
 	{
 		if (projectiles[i].shotby != player && projectiles[i].checkHit(player.rectangle))
 		{
-			player.velocity.x += projectiles[i].velocity.x;
-			player.velocity.y += projectiles[i].velocity.y;
+			player.velocity.x += projectiles[i].velocity.x * knockback;
+			player.velocity.y += projectiles[i].velocity.y * knockback;
 			projectiles.splice(i, 1);
 			i--;
 		}
