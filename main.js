@@ -8,6 +8,7 @@ function draw()
 	if (active)
 	{
 		drawRain();
+		drawProjectiles();
 		player1.draw();
 		player2.draw();
 	}
@@ -42,6 +43,7 @@ function update()
 	if (active)
 	{
 		updateRain(dtime);
+		updateProjectiles(dtime);
 		player1.update(dtime);
 		player2.update(dtime);
 		checkPlayer(player1);

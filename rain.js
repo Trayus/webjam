@@ -20,7 +20,7 @@ function checkPlayer(player)
 	{
 		if (rainarray[i].collide(player.rectangle))
 		{
-			player.resize(2);
+			player.resize(1);
 			rainarray.splice(i, 1);
 		}
 	}
