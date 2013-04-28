@@ -10,11 +10,11 @@ function updateWind(elapsedtime) {
 	   }
 	   
 	   for(var i = 0; i < rainarray.length; i++) {
-		  rainarray[i].x += windspeed * 2 * elapsedtime;
+		  rainarray[i].x += windspeed * 3 * elapsedtime;
 	   }
 	   
-	   player1.rectangle.x += windspeed * elapsedtime;
-	   player2.rectangle.x += windspeed * elapsedtime;
+	   player1.rectangle.x += windspeed * 0.5 * elapsedtime;
+	   player2.rectangle.x += windspeed * 0.5 * elapsedtime;
 	   
 	   timewind++;
    }

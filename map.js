@@ -41,6 +41,7 @@ function checkRain(drop)
 		if (map[i].collide(drop))
 		{
 			return true;
+			
 		}
 	}
 	return false;
