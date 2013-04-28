@@ -6,12 +6,23 @@ var Player = function(x, y, num)
 	this.varjump = false,
 	this.velocity = { 'x': 0, 'y': 0 },
 	this.acceleration = { 'x': 0, 'y': 0 },
-	this.rectangle = new Rectangle(x, y, this.size, this.size, 0, num == 1? 250 : 200, num == 1? 50 : 250),
+	this.rectangle = new Rectangle(x, y, this.size, this.size, num == 1? 0 : 250, num == 1? 250 : 30, num == 1? 50 : 80),
 	
+	this.resize = function(size)
+	{
+		if ((size > 0 && this.size < 60) || (size < 0 && this.size > 10))
+		{
+			this.size += size;
+			this.rectangle.x -= size / 2;
+			this.rectangle.width += size;
+			this.rectangle.y -= size / 2;
+			this.rectangle.height += size;
+		}
+	},
 	this.update = function(elapsedtime)
 	{
 		acc = 0.2;
-		maxvx = 3.5 * 30 / this.size;
+		maxvx = 3.5 * 60 / (this.size);
 		maxvy = 10;
 		jumpstr = -10;
 	

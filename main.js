@@ -31,7 +31,7 @@ function draw()
 		
 		ctx.font = 'italic 20pt Calibri';
 		ctx.fillStyle = '#cccccc';
-		ctx.fillText('Press SPACE or ENTER to start a new match', 50, 50);
+		ctx.fillText('Press SPACE to start a new match', 50, 50);
 	}
 }
 
@@ -44,6 +44,8 @@ function update()
 		updateRain(dtime);
 		player1.update(dtime);
 		player2.update(dtime);
+		checkPlayer(player1);
+		checkPlayer(player2);
 		
 		if (player1.rectangle.x < -100 || player1.rectangle.x > 1300 || player1.rectangle.y > 700)
 		{

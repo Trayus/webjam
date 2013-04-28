@@ -34,6 +34,18 @@ function checkAndReact(player)
 	return false;
 }
 
+function checkRain(drop)
+{
+	for(i = 0; i < map.length; i++)
+	{
+		if (map[i].collide(drop))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 function checkPoint(x, y, rect)
 {
 	if (x > rect.x && x < rect.x + rect.width && y > rect.y && y < rect.y + rect.height)
