@@ -6,6 +6,7 @@ var dcost = 10;
 var minnproj = 20 + ncost;
 var mindproj = 20 + dcost;
 var weak = 1.5;
+var xrecoil = 15;
 
 var Player = function(x, y, num)
 {
@@ -100,7 +101,7 @@ var Player = function(x, y, num)
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
 				this.resize(-dcost);
-				this.velocity.x -= dx * 50;
+				this.velocity.x -= dx * xrecoil;
 				this.velocity.y -= dy * 999;
 			}
 			else if ((d || a || w || s) && this.size <= mindproj)
@@ -201,7 +202,7 @@ var Player = function(x, y, num)
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
 				this.resize(-dcost);
-				this.velocity.x -= dx * 50;
+				this.velocity.x -= dx * xrecoil;
 				this.velocity.y -= dy * 999;
 			}
 			else if ((right || left || up || down) && this.size <= mindproj)
