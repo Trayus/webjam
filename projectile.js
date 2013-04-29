@@ -1,9 +1,9 @@
 var projectiles = new Array();
-var knockback = 1.5;
+var knockback = 1;
 
 var Projectile = function(x, y, shotby, vx, vy)
 {
-	this.time = 50;
+	this.time = 30;
 	this.rectangle = new Rectangle(x, y, 8, 8, shotby.rectangle.red, shotby.rectangle.green, shotby.rectangle.blue);
 	this.velocity = { 'x': vx, 'y': vy },
 	this.shotby = shotby,

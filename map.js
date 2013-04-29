@@ -22,7 +22,7 @@ function checkAndReact(player)
 			{
 				if (topleft && topright){ player.rectangle.y = map[i].y + map[i].height;  player.velocity.y = 0; }
 				if (botleft && botright){ player.rectangle.y = map[i].y - player.rectangle.height; return true; }
-				if (topleft && botleft) { player.rectangle.x = map[i].x + map[i].width; console.log("HAI");}
+				if (topleft && botleft) { player.rectangle.x = map[i].x + map[i].width;}
 				if (topright && botright) player.rectangle.x = map[i].x - player.rectangle.width;
 			}
 			else
@@ -51,10 +51,10 @@ function checkRain(drop)
 
 function checkProjectile(proj)
 {
-	console.log("here");
+	//console.log("here");
 	for(i = 0; i < map.length; i++)
 	{
-	console.log(i);
+	//console.log(i);
 		if (map[i].collide(proj.rectangle))
 		{
 			return true;

@@ -18,7 +18,7 @@ document.addEventListener('keydown', function(event) {
     }
     else if(event.keyCode == 78) {
 		ab2 = true;
-		console.log("right: " + right + " left: " + left + " up: " + up + " down: " + down);
+		//console.log("right: " + right + " left: " + left + " up: " + up + " down: " + down);
     }
 	
     if(event.keyCode == 32) {

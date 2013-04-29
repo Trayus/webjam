@@ -1,13 +1,11 @@
-var nprojspeed = 12;
-var dprojspeed = 10;
+var nprojspeed = 15;
+var dprojspeed = 12;
 var spread = 4;
-var ncost = 20;
+var ncost = 10;
 var dcost = 10;
-var pushback = 50;
-var adjpushback = pushback;
-var pspeed = 1.5
-var ncost = 20;
-var dcost = 10;
+var minnproj = 20 + ncost;
+var mindproj = 20 + dcost;
+var weak = 1.5;
 
 var Player = function(x, y, num)
 {
@@ -22,7 +20,7 @@ var Player = function(x, y, num)
 	
 	this.resize = function(size)
 	{
-		if ((size > 0 && this.size + size < 60) || (size < 0 && this.size - size > 20))
+		if ((size > 0 && this.size < 60) || (size < 0 && this.size > 20))
 		{
 			this.size += size;
 			this.rectangle.x -= size / 2;
@@ -34,11 +32,11 @@ var Player = function(x, y, num)
 	
 	this.checkAttack = function()
 	{
-	    console.log("attacked: " + this.attacked + this.num);
+	    //console.log("attacked: " + this.attacked + this.num);
 		if (this.num == 1 && ab1 && !this.attacked)
 		{
 			this.attacked = true;
-			if (!d && !a && !w && !s)
+			if (!d && !a && !w && !s && this.size > minnproj)
 			{
 				this.velocity.x = 0;
 				this.velocity.y = -5;
@@ -53,6 +51,7 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this,
 						dx * nprojspeed + Math.random() / 4, dy * nprojspeed + Math.random() / 4));
 				}
+					
 				this.resize(-ncost);
 			}
 			else if (!d && !a && !w && !s && this.size <= minnproj)
@@ -68,10 +67,10 @@ var Player = function(x, y, num)
 					
 					projectiles.push(new Projectile(this.rectangle.x + this.rectangle.width / 2 + dx * this.size / 2, 
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this,
-						dx * nprojspeed + Math.random() / 4, dy * nprojspeed + Math.random() / 4));
+						dx * nprojspeed / weak + Math.random() / 4, dy * nprojspeed / weak + Math.random() / 4));
 				}
 			}
-			else if ((d || a || w || s))
+			else if ((d || a || w || s) && this.size > mindproj)
 			{
 				var angle;
 				if (a ^ d && w ^ s) // diagonal
@@ -80,15 +79,16 @@ var Player = function(x, y, num)
 					if (d && !a && w && !s) angle = 315;
 					if (a && !d && s && !w) angle = 135;
 					if (d && !a && s && !w) angle = 45;
-					adjpushback = pushback / 2;
 				}
-				else
+				else if ((a && !d && !w && !s) || (!a && d && !w && !s) || (!a && !d && w && !s) || (!a && !d && !w && s))
 				{
 					if (a && !d && !(w^s)) angle = 180;
 					if (d && !a && !(w^s)) angle = 0;
 					if (w && !s && !(a^d)) angle = 270;
 					if (s && !w && !(a^d)) angle = 90;
 				}
+				else
+					return;
 				angle = angle / 180.0 * 3.14;
 				var dx = Math.cos(angle);
 				var dy = Math.sin(angle);
@@ -99,16 +99,9 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
-				
-				if(this.size < 20 + dcost)
-				{
-					adjpushback = adjpushback / 2;
-				}
-				this.velocity.x -= dx * adjpushback;
-				this.velocity.y -= dy * adjpushback;
-				adjpushback = pushback;
-				
 				this.resize(-dcost);
+				this.velocity.x -= dx * 50;
+				this.velocity.y -= dy * 999;
 			}
 			else if ((d || a || w || s) && this.size <= mindproj)
 			{
@@ -120,13 +113,15 @@ var Player = function(x, y, num)
 					if (a && !d && s && !w) angle = 135;
 					if (d && !a && s && !w) angle = 45;
 				}
-				else
+				else if ((a && !d && !w && !s) || (!a && d && !w && !s) || (!a && !d && w && !s) || (!a && !d && !w && s))
 				{
 					if (a && !d && !(w^s)) angle = 180;
 					if (d && !a && !(w^s)) angle = 0;
 					if (w && !s && !(a^d)) angle = 270;
 					if (s && !w && !(a^d)) angle = 90;
 				}
+				else
+					return;
 				angle = angle / 180.0 * 3.14;
 				var dx = Math.cos(angle);
 				var dy = Math.sin(angle);
@@ -135,19 +130,19 @@ var Player = function(x, y, num)
 				{
 					projectiles.push(new Projectile(this.rectangle.x + this.rectangle.width / 2 + dx * this.size / 2, 
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
-						dx * dprojspeed / 2 + (Math.random() - 0.5) * spread, dy * dprojspeed / 2 + (Math.random() - 0.5) * spread));
+						dx * dprojspeed / weak + (Math.random() - 0.5) * spread, dy * dprojspeed / weak + (Math.random() - 0.5) * spread));
 				}
 			}
 		}
-		else if (this.num != 1 && ab2 && !this.attacked && this.size < 20 + ncost)
+		else if (this.num != 1 && ab2 && !this.attacked)
 		{
 		    this.attacked = true;
-			if (!right && !left && !up && !down)
+			if (!right && !left && !up && !down && this.size > minnproj)
 			{
 				this.velocity.x = 0;
 				this.velocity.y = -5;
 				
-				for(i = 0; i < 360; i += 20)
+				for (i = 0; i < 360; i += 20)
 				{
 					var dir = i / 180.0 * 3.14;
 					var dx = Math.cos(dir);
@@ -173,11 +168,10 @@ var Player = function(x, y, num)
 					
 					projectiles.push(new Projectile(this.rectangle.x + this.rectangle.width / 2 + dx * this.size / 2, 
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
-						dx * nprojspeed + Math.random() / 4, dy * nprojspeed + Math.random() / 4));
+						dx * nprojspeed / weak + Math.random() / 4, dy * nprojspeed / weak + Math.random() / 4));
 				}
 			}
 			else if ((right || left || up || down) && this.size > mindproj)
-			else if ((right || left || up || down))
 			{
 				var angle;
 				if (left ^ right && up ^ down) // diagonal
@@ -186,15 +180,16 @@ var Player = function(x, y, num)
 					if (right && !left && up && !down) angle = 315;
 					if (left && !right && down && !up) angle = 135;
 					if (right && !left && down && !up) angle = 45;
-					adjpushback = pushback / 2;
 				}
-				else
+				else if((left && !right && !up && !down) || (!left && right && !up && !down) || (!left && !right && up && !down) || (!left && !right && !up && down))
 				{
 					if (left && !right && !(up^down)) angle = 180;
 					if (right && !left && !(up^down)) angle = 0;
 					if (up && !down && !(left^right)) angle = 270;
 					if (down && !up && !(left^right)) angle = 90;
 				}
+				else
+					return;
 				angle = angle / 180.0 * 3.14;
 				var dx = Math.cos(angle);
 				var dy = Math.sin(angle);
@@ -205,17 +200,9 @@ var Player = function(x, y, num)
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
 						dx * dprojspeed + (Math.random() - 0.5) * spread, dy * dprojspeed + (Math.random() - 0.5) * spread));
 				}
-				
-				if(this.size < 20 + dcost)
-				{
-					adjpushback = adjpushback / 2;
-				}
-				this.velocity.x -= dx * adjpushback;
-				this.velocity.y -= dy * adjpushback;
-				adjpushback = pushback;
-				
 				this.resize(-dcost);
-				
+				this.velocity.x -= dx * 50;
+				this.velocity.y -= dy * 999;
 			}
 			else if ((right || left || up || down) && this.size <= mindproj)
 			{
@@ -227,13 +214,15 @@ var Player = function(x, y, num)
 					if (left && !right && down && !up) angle = 135;
 					if (right && !left && down && !up) angle = 45;
 				}
-				else
+				else if((left && !right && !up && !down) || (!left && right && !up && !down) || (!left && !right && up && !down) || (!left && !right && !up && down))
 				{
 					if (left && !right && !(up^down)) angle = 180;
 					if (right && !left && !(up^down)) angle = 0;
 					if (up && !down && !(left^right)) angle = 270;
 					if (down && !up && !(left^right)) angle = 90;
 				}
+				else
+					return;
 				angle = angle / 180.0 * 3.14;
 				var dx = Math.cos(angle);
 				var dy = Math.sin(angle);
@@ -242,7 +231,7 @@ var Player = function(x, y, num)
 				{
 					projectiles.push(new Projectile(this.rectangle.x + this.rectangle.width / 2 + dx * this.size / 2, 
 						this.rectangle.y + this.rectangle.height / 2 + dy * this.size / 2, this, 
-						dx * dprojspeed / 2 + (Math.random() - 0.5) * spread, dy * dprojspeed / 2 + (Math.random() - 0.5) * spread));
+						dx * dprojspeed / weak + (Math.random() - 0.5) * spread, dy * dprojspeed / weak + (Math.random() - 0.5) * spread));
 				}
 			}
 		}
@@ -255,7 +244,7 @@ var Player = function(x, y, num)
 	this.update = function(elapsedtime)
 	{
 		acc = 0.2;
-		maxvx = 600 / this.size; //3.5 * 60 / (this.size);
+		maxvx = 400 / this.size;//3.5 * 60 / (this.size);
 		maxvy = 12;
 		jumpstr = -12;
 	
@@ -297,8 +286,8 @@ var Player = function(x, y, num)
 		
 		checkHit(this);
 		
-		this.rectangle.x += this.velocity.x * pspeed * elapsedtime;
-		this.rectangle.y += this.velocity.y * pspeed * elapsedtime;
+		this.rectangle.x += this.velocity.x * 1.5 * elapsedtime;
+		this.rectangle.y += this.velocity.y * 1.5 * elapsedtime;
 		
 		if (checkAndReact(this))
 			this.falling = false;
