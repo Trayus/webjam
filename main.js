@@ -61,11 +61,13 @@ function update()
 		{
 			active = false;
 			winner = player2;
+			death.play();
 		}
 		if (player2.rectangle.x < -100 || player2.rectangle.x > 1300 || player2.rectangle.y > 700)
 		{
 			active = false;
 			winner = player1;
+			death.play();
 		}
 	}
 	else
@@ -96,11 +98,17 @@ var player2;
 var active = false;
 var winner = 0;
 
+var snd = new Audio("rain-01.mp3");
+snd.loop = true;
+snd.play();
+var death = new Audio("death.wav");
+
 function reset()
 {
 	player1 = new Player(250, 50, 1);
 	player2 = new Player(950, 50, 2);
 	active = true;
+	projectiles = new Array();
 }
 setInterval(gameloop, 20);
 draw();
